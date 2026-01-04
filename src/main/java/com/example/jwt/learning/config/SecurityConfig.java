@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -14,15 +15,17 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration ///  This class is a source of bean definitions, and Spring should treat it specially.
 /// It marks a class as a Spring-manage configuration class that defines beans using @bean methods and ensures proper lifecycle and singleton behaviour.
-@EnableWebSecurity ///
+@EnableWebSecurity
+@EnableMethodSecurity
 public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(request -> request.requestMatchers("/api/v1/login", "/api/v1/users/create").permitAll()
-                        .requestMatchers("/api/v1/**").authenticated())
+                .authorizeHttpRequests(auth -> auth.requestMatchers("/api/v1/login", "/api/v1/users/create", "/api/v1/users/make-admin/**").permitAll()
+                        .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
+                        .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults())
                 .build();
     }

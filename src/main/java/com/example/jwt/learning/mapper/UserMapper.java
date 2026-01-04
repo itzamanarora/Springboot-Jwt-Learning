@@ -17,7 +17,9 @@ public class UserMapper {
 
     public static UserDto toDTO(User user) {
         return UserDto.builder()
+                .uuid(user.getUuid())
                 .username(user.getUsername())
+                .roles(user.getRoles())
                 .createdAt(user.getCreated_at())
                 .build();
     }

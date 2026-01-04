@@ -8,18 +8,19 @@ import com.example.jwt.learning.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/users")
+@RequestMapping("/api/v1")
 public class UserController {
 
     @Autowired
     private UserService userService;
 
-    @PostMapping("/create")
+    @PostMapping("/users/create")
     public ResponseEntity<UserDto> createUser(@RequestBody CreateUserDTO createUserDTO) {
         User user = UserMapper.toEntity(createUserDTO);
         User savedUser = userService.createUser(user);
@@ -27,7 +28,7 @@ public class UserController {
                 .body(UserMapper.toDTO(savedUser));
     }
 
-    @GetMapping
+    @GetMapping("/users")
     public ResponseEntity<List<UserDto>> getUsers(@RequestParam(required = false) String username) {
         return ResponseEntity.ok(
                 userService.getUser(username)
@@ -35,5 +36,18 @@ public class UserController {
                         .map(UserMapper::toDTO)
                         .toList()
         );
+    }
+
+    @PostMapping("/users/make-admin/{uuid}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<UserDto> makeUserAdmin(@PathVariable String uuid){
+        User updatedUser = userService.makeUserAdmin(uuid);
+        return ResponseEntity.ok(UserMapper.toDTO(updatedUser));
+    }
+
+    @DeleteMapping("/admin/users/{uuid}")
+    public ResponseEntity<Void> deleteUser(@PathVariable String uuid) {
+        userService.deletUserByUuid(uuid);
+        return ResponseEntity.noContent().build();
     }
 }

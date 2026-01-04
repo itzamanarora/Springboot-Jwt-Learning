@@ -8,6 +8,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -15,12 +16,12 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = " users")
+@Table(name = "users")
 public class User {
 
     @Id
-    @UuidGenerator
     @GeneratedValue
+    @UuidGenerator
     private String uuid;
 
     @Column(nullable = false, unique = true)
@@ -31,9 +32,18 @@ public class User {
     @NotBlank(message = "Password cannot be blank")
     private String password;
 
+    @ElementCollection(fetch = FetchType.EAGER)
+    @Enumerated(EnumType.STRING)
+    @CollectionTable(
+            name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_uuid")
+    )
+    @Column(name = "role")
+    private Set<Role> roles;
+
     @CreationTimestamp
-    private String created_at;
+    private Date created_at;
 
     @UpdateTimestamp
-    private String updated_at;
+    private Date updated_at;
 }
