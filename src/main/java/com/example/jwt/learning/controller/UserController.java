@@ -28,7 +28,7 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<List<UserDto>> getUsers(@PathVariable String username) {
+    public ResponseEntity<List<UserDto>> getUsers(@RequestParam(required = false) String username) {
         return ResponseEntity.ok(
                 userService.getUser(username)
                         .stream()

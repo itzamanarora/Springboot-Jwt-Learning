@@ -1,20 +1,20 @@
 package com.example.jwt.learning.service;
 
 import com.example.jwt.learning.entity.User;
-import com.example.jwt.learning.repository.UserRepo;
+import com.example.jwt.learning.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.nio.file.attribute.UserPrincipalNotFoundException;
 import java.util.List;
 
 @Service
 public class UserService {
 
     @Autowired
-    private UserRepo userRepo;
+    private UserRepository userRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -24,22 +24,21 @@ public class UserService {
     public User createUser(User user) {
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
-        return userRepo.save(user);
+        return userRepository.save(user);
     }
 
     /// Get user by username or all users if username is null or blank
-    public List<User> getUser(String username) {
-
-        if(username != null && username.isBlank()) {
-            return List.of(userRepo.findByUsername(username).orElseThrow(
-//                    () -> new UserPrincipalNotFoundException("User not found with username: " + username)
-            ));
+    public List<User> getUser(String username) throws UsernameNotFoundException {
+        if(username != null && !username.isBlank()) {
+            return List.of(userRepository.findByUsername(username)
+                    .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username))
+            );
         }
-        return userRepo.findAll();
+        return userRepository.findAll();
     }
 
     /// Delete user by uuid
     public void deletUserByUuid(String uuid) {
-        userRepo.deleteById(uuid);
+        userRepository.deleteById(uuid);
     }
 }
