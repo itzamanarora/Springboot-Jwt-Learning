@@ -23,7 +23,13 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(auth -> auth.requestMatchers("/api/v1/login", "/api/v1/users/create", "/api/v1/users/make-admin/**").permitAll()
+                .authorizeHttpRequests(auth -> auth.requestMatchers(
+                                "/api/v1/login",
+                                "/api/v1/users/create",
+                                "/api/v1/users/make-admin/**",
+                                "/actuator/**",
+                                "/swagger-ui/**"
+                        ).permitAll()
                         .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults())

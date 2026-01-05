@@ -1,7 +1,6 @@
 package com.example.jwt.learning.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -25,11 +24,9 @@ public class User {
     private String uuid;
 
     @Column(nullable = false, unique = true)
-    @NotBlank(message = "Username cannot be blank")
     private String username;
 
     @Column(nullable = false)
-    @NotBlank(message = "Password cannot be blank")
     private String password;
 
     @ElementCollection(fetch = FetchType.EAGER)

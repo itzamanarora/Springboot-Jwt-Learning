@@ -1,5 +1,6 @@
 package com.example.jwt.learning.dto;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 @Getter
@@ -8,6 +9,10 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class CreateUserDTO {
+
+    @NotBlank(message = "Username cannot be blank")
     private String username;
+
+    @NotBlank(message = "Password cannot be blank")
     private String password;
 }
