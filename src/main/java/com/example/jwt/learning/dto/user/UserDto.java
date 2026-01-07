@@ -1,6 +1,6 @@
-package com.example.jwt.learning.dto;
+package com.example.jwt.learning.dto.user;
 
-import com.example.jwt.learning.entity.Role;
+import com.example.jwt.learning.entity.user.Role;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.Builder;
 import lombok.Getter;

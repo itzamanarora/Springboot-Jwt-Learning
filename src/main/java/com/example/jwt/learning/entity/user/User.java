@@ -1,4 +1,4 @@
-package com.example.jwt.learning.entity;
+package com.example.jwt.learning.entity.user;
 
 import jakarta.persistence.*;
 import lombok.*;

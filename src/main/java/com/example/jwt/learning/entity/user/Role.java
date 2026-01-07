@@ -1,4 +1,4 @@
-package com.example.jwt.learning.entity;
+package com.example.jwt.learning.entity.user;
 
 public enum Role {
     ROLE_USER,

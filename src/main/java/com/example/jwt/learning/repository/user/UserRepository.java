@@ -1,6 +1,6 @@
-package com.example.jwt.learning.repository;
+package com.example.jwt.learning.repository.user;
 
-import com.example.jwt.learning.entity.User;
+import com.example.jwt.learning.entity.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

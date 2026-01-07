@@ -1,8 +1,8 @@
-package com.example.jwt.learning.mapper;
+package com.example.jwt.learning.mapper.user;
 
-import com.example.jwt.learning.dto.CreateUserDTO;
-import com.example.jwt.learning.dto.UserDto;
-import com.example.jwt.learning.entity.User;
+import com.example.jwt.learning.dto.user.CreateUserDTO;
+import com.example.jwt.learning.dto.user.UserDto;
+import com.example.jwt.learning.entity.user.User;
 
 import java.util.List;
 

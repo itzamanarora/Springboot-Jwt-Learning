@@ -1,4 +1,4 @@
-package com.example.jwt.learning.dto;
+package com.example.jwt.learning.dto.user;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;

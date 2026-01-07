@@ -1,7 +1,7 @@
 package com.example.jwt.learning.security;
 
-import com.example.jwt.learning.entity.User;
-import com.example.jwt.learning.repository.UserRepository;
+import com.example.jwt.learning.entity.user.User;
+import com.example.jwt.learning.repository.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

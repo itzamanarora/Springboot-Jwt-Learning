@@ -1,8 +1,8 @@
-package com.example.jwt.learning.service;
+package com.example.jwt.learning.service.user;
 
-import com.example.jwt.learning.entity.Role;
-import com.example.jwt.learning.entity.User;
-import com.example.jwt.learning.repository.UserRepository;
+import com.example.jwt.learning.entity.user.Role;
+import com.example.jwt.learning.entity.user.User;
+import com.example.jwt.learning.repository.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;

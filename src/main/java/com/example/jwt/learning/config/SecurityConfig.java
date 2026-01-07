@@ -13,8 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-@Configuration ///  This class is a source of bean definitions, and Spring should treat it specially.
-/// It marks a class as a Spring-manage configuration class that defines beans using @bean methods and ensures proper lifecycle and singleton behaviour.
+@Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfig {
@@ -24,11 +23,11 @@ public class SecurityConfig {
         return httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth.requestMatchers(
+                                "/swagger-ui/**",
+                                "/actuator/**",
                                 "/api/v1/login",
                                 "/api/v1/users/create",
-                                "/api/v1/users/make-admin/**",
-                                "/actuator/**",
-                                "/swagger-ui/**"
+                                "/api/v1/users/make-admin/**"
                         ).permitAll()
                         .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated())
