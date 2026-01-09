@@ -32,13 +32,8 @@ public class UserController {
     }
 
     @GetMapping("/users")
-    public ResponseEntity<List<UserDto>> getUsers(@RequestParam(required = false) String username) {
-        return ResponseEntity.ok(
-                userService.getUser(username)
-                        .stream()
-                        .map(UserMapper::toDTO)
-                        .toList()
-        );
+    public ResponseEntity<List<UserDto>> getUsers(@RequestParam(required = false) String search) {
+        return ResponseEntity.ok(userService.getUser(search));
     }
 
     @PostMapping("/users/make-admin/{uuid}")

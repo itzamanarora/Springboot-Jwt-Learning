@@ -1,7 +1,9 @@
 package com.example.jwt.learning.service.user;
 
+import com.example.jwt.learning.dto.user.UserDto;
 import com.example.jwt.learning.entity.user.Role;
 import com.example.jwt.learning.entity.user.User;
+import com.example.jwt.learning.mapper.user.UserMapper;
 import com.example.jwt.learning.repository.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -42,13 +44,18 @@ public class UserService {
     }
 
     /// Get user by username or all users if username is null or blank
-    public List<User> getUser(String username) throws UsernameNotFoundException {
+    public List<UserDto> getUser(String username) throws UsernameNotFoundException {
         if(username != null && !username.isBlank()) {
-            return List.of(userRepository.findByUsername(username)
-                    .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username))
-            );
+
+             User user = userRepository.findByUsername(username)
+                    .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
+            return List.of(UserMapper.toDTO(user));
         }
-        return userRepository.findAll();
+
+        List<User> allUsers = userRepository.findAll();
+        return allUsers.stream()
+                .map(UserMapper::toDTO)
+                .toList();
     }
 
     /// Delete user by uuid
